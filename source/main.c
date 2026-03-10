@@ -2,10 +2,10 @@
 #include <stdio.h>
 
 #define TEX_SIZE	64
-#define BUTTON_X1	16
-#define BUTTON_Y1	120
-#define BUTTON_X2	120
-#define BUTTON_Y2	168
+#define BUTTON_X1	0
+#define BUTTON_Y1	72
+#define BUTTON_X2	128
+#define BUTTON_Y2	104
 
 static u16 texture[TEX_SIZE * TEX_SIZE];
 static int textureID = 0;
@@ -68,12 +68,13 @@ static void init3D(void)
 
 	glGenTextures(1, &textureID);
 	glBindTexture(0, textureID);
+
 	glTexImage2D(
 		0,
 		0,
 		GL_RGBA,
-		TEX_SIZE,
-		TEX_SIZE,
+		TEXTURE_SIZE_64,
+		TEXTURE_SIZE_64,
 		0,
 		TEXGEN_TEXCOORD,
 		texture
@@ -130,16 +131,16 @@ static void drawQuad(
 {
 	glBegin(GL_QUADS);
 
-	glTexCoord2t16(0, 0);
+	glTexCoord2t16(inttot16(0), inttot16(0));
 	glVertex3v16(x1, y1, z1);
 
-	glTexCoord2t16(inttot16(TEX_SIZE), 0);
+	glTexCoord2t16(inttot16(TEX_SIZE), inttot16(0));
 	glVertex3v16(x2, y2, z2);
 
 	glTexCoord2t16(inttot16(TEX_SIZE), inttot16(TEX_SIZE));
 	glVertex3v16(x3, y3, z3);
 
-	glTexCoord2t16(0, inttot16(TEX_SIZE));
+	glTexCoord2t16(inttot16(0), inttot16(TEX_SIZE));
 	glVertex3v16(x4, y4, z4);
 
 	glEnd();
@@ -203,7 +204,7 @@ int main(void)
 		scanKeys();
 		updateTouchUI();
 
-		angleY += rotationDir * 2;
+		angleY += rotationDir * 12;
 
 		glMatrixMode(GL_MODELVIEW);
 		glLoadIdentity();
